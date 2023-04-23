@@ -111,6 +111,7 @@ double Expression::solve() {
                     auxStack.push(firstOperand * secondOperand);
                     break;
                 case '/':
+                    if (secondOperand == 0) throw runtime_error("Division by zero.");
                     auxStack.push(firstOperand / secondOperand);
                     break;
             }

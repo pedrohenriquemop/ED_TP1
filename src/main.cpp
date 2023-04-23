@@ -31,7 +31,12 @@ void processInput(string& input) {
                     } else if (detectStringType(str) == "instr_posfixa") {
                         cout << "POSFIXA: " << expression.returnAsPostfix() << endl;
                     } else if (detectStringType(str) == "instr_resolve") {
-                        cout << "VAL: " << expression.solve() << endl;
+                        try {
+                            double result = expression.solve();
+                            cout << "VAL: " << result << endl;
+                        } catch (runtime_error& e) {
+                            cout << "ERRO AO RESOLVER EXPRESSÃO: " << e.what() << endl;
+                        }
                     }
 
                     if (detectStringType(str) == "parenthesis_open" && instructionType == "ler") {
