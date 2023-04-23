@@ -14,7 +14,7 @@ class Stack {
 
     void push(T item) {
         if (size == MAXTAM)
-            throw "Stack is full.";
+            throw runtime_error("Stack is full.");
 
         top++;
         size++;
@@ -23,7 +23,7 @@ class Stack {
 
     T pop() {
         if (isEmpty())
-            throw "Stack is empty.";
+            throw runtime_error("Stack is empty.");
 
         T aux = items[top];
         top--;

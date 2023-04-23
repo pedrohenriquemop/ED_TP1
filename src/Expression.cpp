@@ -1,7 +1,6 @@
 #include "Expression.hpp"
 
 void Expression::storeInfixExpression(string input) {
-    // cout << "PROCEESSANDO INFIXA:" << input << endl;
     int lastIndex = 0;
     char separator = ' ';
     if (!tree.isEmpty()) tree.clean();
@@ -14,7 +13,6 @@ void Expression::storeInfixExpression(string input) {
             if (input[i] == separator || input[i] == '\0') {
                 if (i != lastIndex) {
                     string str = input.substr(lastIndex, i - lastIndex);
-                    // cout << detectStringType(str) << ": " << str << endl;
 
                     if (detectStringType(str) == "number") {
                         nodeStack.push(new BinaryTreeNode(str));
@@ -46,19 +44,13 @@ void Expression::storeInfixExpression(string input) {
             nodeStack.push(new BinaryTreeNode(operatorStack.pop(), leftNode, rightNode));
         }
     } catch (...) {
-        throw "Invalid infix expression.";
+        throw runtime_error("Invalid infix expression.");
     }
 
     tree.setRoot(nodeStack.pop());
-
-    // cout << "INORDER TREE: " << tree.inOrderWithParenthesis() << endl;
-    // cout << "POSTORDER TREE: " << tree.postOrder() << endl;
-    // cout << "TESTING NEW FUNCTION: " << endl;
-    // tree.getInOrderStack().print();
 }
 
 void Expression::storePostfixExpression(string input) {
-    // cout << "PROCEESSANDO POSFIXA:" << input << endl;
     int lastIndex = 0;
     char separator = ' ';
     if (!tree.isEmpty()) tree.clean();
@@ -80,7 +72,7 @@ void Expression::storePostfixExpression(string input) {
                         tree.setRoot(inserted);
                         stack.push(inserted);
                     } catch (...) {
-                        throw "Invalid postfix expression.";
+                        throw runtime_error("Invalid postfix expression.");
                     }
                 }
             }
@@ -88,15 +80,12 @@ void Expression::storePostfixExpression(string input) {
             lastIndex = i + 1;
         }
     }
-    if (!(stack.getSize() == 1)) throw "Invalid postfix expression.";
-    // cout << "INORDER TREE: " << tree.inOrderWithParenthesis() << endl;
-    // cout << "POSTORDER TREE: " << tree.postOrder() << endl;
-    // cout << "TESTING NEW FUNCTION: " << endl;
+    if (!(stack.getSize() == 1) || tree.isEmpty()) throw runtime_error("Invalid postfix expression.");
 }
 
 double Expression::solve() {
     if (isEmpty())
-        throw "No stored expression.";
+        throw runtime_error("No stored expression.");
     Stack<string> postOrderStack = tree.getPostOrderStack();
     Stack<double> auxStack;
 
@@ -125,8 +114,6 @@ double Expression::solve() {
                     auxStack.push(firstOperand / secondOperand);
                     break;
             }
-            // cout << "auxStack state: " << endl;
-            // auxStack.print();
         }
     }
 
@@ -135,13 +122,13 @@ double Expression::solve() {
 
 string Expression::returnAsInfix() {
     if (isEmpty())
-        throw "No stored expression.";
+        throw runtime_error("No stored expression.");
     return tree.inOrderWithParenthesis();
 }
 
 string Expression::returnAsPostfix() {
     if (isEmpty())
-        throw "No stored expression.";
+        throw runtime_error("No stored expression.");
     return tree.postOrder();
 }
 

@@ -42,19 +42,19 @@ BinaryTreeNode* BinaryTree::insert(string value, BinaryTreeNode* left, BinaryTre
 
 string BinaryTree::preOrder() {
     if (isEmpty())
-        throw "Tree with no root.";
+        throw runtime_error("Tree with no root.");
     return preOrderTraversal(root);
 };
 
 string BinaryTree::inOrderWithParenthesis() {
     if (isEmpty())
-        throw "Tree with no root.";
+        throw runtime_error("Tree with no root.");
     return inOrderTraversalWithParenthesis(root);
 };
 
 string BinaryTree::postOrder() {
     if (isEmpty())
-        throw "Tree with no root.";
+        throw runtime_error("Tree with no root.");
     return postOrderTraversal(root);
 };
 
@@ -72,7 +72,7 @@ Stack<string> BinaryTree::getPostOrderStack() {
 
 void BinaryTree::clean() {
     if (isEmpty())
-        throw "Tree with no root.";
+        throw runtime_error("Tree with no root.");
     recursiveDelete(root);
 };
 

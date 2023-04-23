@@ -37,21 +37,21 @@ void processInput(string& input) {
                     if (detectStringType(str) == "parenthesis_open" && instructionType == "ler") {
                         try {
                             expression.storeInfixExpression(input.substr(lastIndex, input.length() - lastIndex));
-                        } catch (const char* error) {
-                            if (strcmp(error, "Invalid infix expression.") == 0) {
+                        } catch (exception& e) {
+                            if (strcmp(e.what(), "Invalid infix expression.") == 0) {
                                 cout << "ERRO: EXP NAO VALIDA" << endl;
                             } else
-                                cout << "ERRO: " << error << endl;
+                                cout << "ERRO: " << e.what() << endl;
                         }
                         break;
                     } else if (detectStringType(str) == "number" && instructionType == "ler") {
                         try {
                             expression.storePostfixExpression(input.substr(lastIndex, input.length() - lastIndex));
-                        } catch (const char* error) {
-                            if (strcmp(error, "Invalid postfix expression.") == 0) {
+                        } catch (exception& e) {
+                            if (strcmp(e.what(), "Invalid postfix expression.") == 0) {
                                 cout << "ERRO: EXP NAO VALIDA" << endl;
                             } else
-                                cout << "ERRO: " << error << endl;
+                                cout << "ERRO: " << e.what() << endl;
                         }
                         break;
                     }
@@ -60,8 +60,8 @@ void processInput(string& input) {
                 lastIndex = i + 1;
             }
         }
-    } catch (char const* error) {
-        cout << error << endl;
+    } catch (exception& e) {
+        cout << e.what() << endl;
     }
 }
 
