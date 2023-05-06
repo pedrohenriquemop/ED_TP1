@@ -24,7 +24,28 @@ void processInput(string& input) {
             if (input[i] == separator || input[i] == '\0') {
                 if (i != lastIndex) {
                     string str = input.substr(lastIndex, i - lastIndex);
-                    if (detectStringType(str) == "instr_ler") {
+                    if (instructionType == "ler") {
+                        if (detectStringType(str) == "instr_infixa") {
+                            try {
+                                expression.storeInfixExpression(input.substr(lastIndex, input.length() - lastIndex));
+                            } catch (exception& e) {
+                                if (strcmp(e.what(), "Invalid infix expression.") == 0) {
+                                    cout << "ERRO: EXP NAO VALIDA" << endl;
+                                } else
+                                    cout << "ERRO: " << e.what() << endl;
+                            }
+                        } else if (detectStringType(str) == "instr_posfixa") {
+                            try {
+                                expression.storePostfixExpression(input.substr(lastIndex, input.length() - lastIndex));
+                            } catch (exception& e) {
+                                if (strcmp(e.what(), "Invalid postfix expression.") == 0) {
+                                    cout << "ERRO: EXP NAO VALIDA" << endl;
+                                } else
+                                    cout << "ERRO: " << e.what() << endl;
+                            }
+                            break;
+                        }
+                    } else if (detectStringType(str) == "instr_ler") {
                         instructionType = "ler";
                     } else if (detectStringType(str) == "instr_infixa") {
                         cout << "INFIXA: " << expression.returnAsInfix() << endl;
@@ -37,28 +58,6 @@ void processInput(string& input) {
                         } catch (runtime_error& e) {
                             cout << "ERRO AO RESOLVER EXPRESSÃO: " << e.what() << endl;
                         }
-                    }
-
-                    if (detectStringType(str) == "parenthesis_open" && instructionType == "ler") {
-                        try {
-                            expression.storeInfixExpression(input.substr(lastIndex, input.length() - lastIndex));
-                        } catch (exception& e) {
-                            if (strcmp(e.what(), "Invalid infix expression.") == 0) {
-                                cout << "ERRO: EXP NAO VALIDA" << endl;
-                            } else
-                                cout << "ERRO: " << e.what() << endl;
-                        }
-                        break;
-                    } else if (detectStringType(str) == "number" && instructionType == "ler") {
-                        try {
-                            expression.storePostfixExpression(input.substr(lastIndex, input.length() - lastIndex));
-                        } catch (exception& e) {
-                            if (strcmp(e.what(), "Invalid postfix expression.") == 0) {
-                                cout << "ERRO: EXP NAO VALIDA" << endl;
-                            } else
-                                cout << "ERRO: " << e.what() << endl;
-                        }
-                        break;
                     }
                 }
                 if (input[i] == '\0') break;
