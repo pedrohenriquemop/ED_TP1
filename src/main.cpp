@@ -7,14 +7,14 @@
 
 using namespace string_utils;
 
-std::ostream& operator<<(std::ostream& os, BinaryTreeNode*& obj) {
+std::ostream& operator<<(std::ostream& os, BinaryTreeNode*& obj) {  // override do operador cout para caso algum nó da árvore fosse ser impresso
     os << "BinaryTreeNode object value: " << obj->getValue();
     return os;
 }
 
 Expression expression;
 
-void processInput(string& input) {
+void processInput(string& input) {  // processa a string lida com o getLine, chamando as funções de Expression correspondentes aos comandos passados
     int lastIndex = 0;
     char separator = ' ';
     string instructionType = "";

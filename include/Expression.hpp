@@ -12,18 +12,18 @@ using namespace string_utils;
 
 class Expression {
    public:
-    void storeInfixExpression(string input);
+    void storeInfixExpression(string input);  // armazena expressão infixa recebida como árvore binária
 
-    void storePostfixExpression(string input);
+    void storePostfixExpression(string input);  // armazena expressão posfixa recebida como árvore binária
 
-    double solve();
+    double solve();  // resolve a expressão armazenada na árvore
 
-    string returnAsInfix();
+    string returnAsInfix();  // retorna a expressão armazenada na árvore na notação infixa
 
-    string returnAsPostfix();
+    string returnAsPostfix();  // retorna a expressão armazenada na árvore na notação posfixa
 
-    bool isEmpty();
+    bool isEmpty();  // verifica se a árvore que armazena a expressão está vazia
 
    private:
-    BinaryTree tree;
+    BinaryTree tree;  // árvore que contém a expressão
 };
