@@ -65,7 +65,7 @@ void processInput(string& input) {
             }
         }
     } catch (exception& e) {
-        cout << e.what() << endl;
+        cout << "ERRO: " << e.what() << endl;
     }
 }
 

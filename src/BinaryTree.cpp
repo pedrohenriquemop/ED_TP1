@@ -74,6 +74,7 @@ void BinaryTree::clean() {
     if (isEmpty())
         throw runtime_error("Tree with no root.");
     recursiveDelete(root);
+    root = nullptr;
 };
 
 void BinaryTree::recursiveDelete(BinaryTreeNode*& p) {

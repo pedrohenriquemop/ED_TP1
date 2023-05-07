@@ -3,7 +3,7 @@
 void Expression::storeInfixExpression(string input) {
     int lastIndex = 0;
     char separator = ' ';
-    if (!tree.isEmpty()) tree.clean();
+    if (!isEmpty()) tree.clean();
 
     Stack<BinaryTreeNode*> nodeStack;
     Stack<string> operatorStack;
@@ -43,17 +43,18 @@ void Expression::storeInfixExpression(string input) {
             BinaryTreeNode* leftNode = nodeStack.pop();
             nodeStack.push(new BinaryTreeNode(operatorStack.pop(), leftNode, rightNode));
         }
+
+        tree.setRoot(nodeStack.pop());
     } catch (...) {
+        if (!isEmpty()) tree.clean();
         throw runtime_error("Invalid infix expression.");
     }
-
-    tree.setRoot(nodeStack.pop());
 }
 
 void Expression::storePostfixExpression(string input) {
     int lastIndex = 0;
     char separator = ' ';
-    if (!tree.isEmpty()) tree.clean();
+    if (!isEmpty()) tree.clean();
 
     Stack<BinaryTreeNode*> stack;
 
@@ -72,6 +73,7 @@ void Expression::storePostfixExpression(string input) {
                         tree.setRoot(inserted);
                         stack.push(inserted);
                     } catch (...) {
+                        if (!isEmpty()) tree.clean();
                         throw runtime_error("Invalid postfix expression.");
                     }
                 }
@@ -80,7 +82,10 @@ void Expression::storePostfixExpression(string input) {
             lastIndex = i + 1;
         }
     }
-    if (!(stack.getSize() == 1) || tree.isEmpty()) throw runtime_error("Invalid postfix expression.");
+    if (!(stack.getSize() == 1) || isEmpty()) {
+        if (!isEmpty()) tree.clean();
+        throw runtime_error("Invalid postfix expression.");
+    }
 }
 
 double Expression::solve() {
