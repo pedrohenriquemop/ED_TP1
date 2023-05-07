@@ -28,6 +28,7 @@ void processInput(string& input) {  // processa a string lida com o getLine, cha
                         if (detectStringType(str) == "instr_infixa") {
                             try {
                                 expression.storeInfixExpression(input.substr(lastIndex, input.length() - lastIndex));
+                                cout << "EXPRESSAO OK: " << expression.returnAsInfix() << endl;
                             } catch (exception& e) {
                                 if (strcmp(e.what(), "Invalid infix expression.") == 0) {
                                     cout << "ERRO: EXP NAO VALIDA" << endl;
@@ -37,6 +38,7 @@ void processInput(string& input) {  // processa a string lida com o getLine, cha
                         } else if (detectStringType(str) == "instr_posfixa") {
                             try {
                                 expression.storePostfixExpression(input.substr(lastIndex, input.length() - lastIndex));
+                                cout << "EXPRESSAO OK: " << expression.returnAsPostfix() << endl;
                             } catch (exception& e) {
                                 if (strcmp(e.what(), "Invalid postfix expression.") == 0) {
                                     cout << "ERRO: EXP NAO VALIDA" << endl;
@@ -48,15 +50,36 @@ void processInput(string& input) {  // processa a string lida com o getLine, cha
                     } else if (detectStringType(str) == "instr_ler") {
                         instructionType = "ler";
                     } else if (detectStringType(str) == "instr_infixa") {
-                        cout << "INFIXA: " << expression.returnAsInfix() << endl;
+                        try {
+                            string exp = expression.returnAsInfix();
+                            cout << "INFIXA: " << exp << endl;
+                        } catch (runtime_error& e) {
+                            if (strcmp(e.what(), "No stored expression.") == 0) {
+                                cout << "ERRO: EXP NAO EXISTE" << endl;
+                            } else {
+                                cout << "ERRO: " << e.what() << endl;
+                            }
+                        }
                     } else if (detectStringType(str) == "instr_posfixa") {
-                        cout << "POSFIXA: " << expression.returnAsPostfix() << endl;
+                        try {
+                            string exp = expression.returnAsPostfix();
+                            cout << "POSFIXA: " << exp << endl;
+                        } catch (runtime_error& e) {
+                            if (strcmp(e.what(), "No stored expression.") == 0) {
+                                cout << "ERRO: EXP NAO EXISTE" << endl;
+                            } else {
+                                cout << "ERRO: " << e.what() << endl;
+                            }
+                        }
                     } else if (detectStringType(str) == "instr_resolve") {
                         try {
                             double result = expression.solve();
                             cout << "VAL: " << result << endl;
                         } catch (runtime_error& e) {
-                            cout << "ERRO AO RESOLVER EXPRESSÃO: " << e.what() << endl;
+                            if (strcmp(e.what(), "No stored expression.") == 0) {
+                                cout << "ERRO: EXP NAO EXISTE" << endl;
+                            } else
+                                cout << "ERRO: " << e.what() << endl;
                         }
                     }
                 }
